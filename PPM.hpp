@@ -13,4 +13,5 @@ class PPM
         PPM(int image_size, unsigned char * image);
         void createImage();
         void setPixel(int x, int y, float color);
+        float getPixel(int x, int y);
 };

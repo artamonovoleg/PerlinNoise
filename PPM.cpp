@@ -15,5 +15,9 @@ void PPM::createImage()
 }
 void PPM::setPixel(int x, int y, float color)
 {
-    m_image[x + y * m_image_size] += color;
+    m_image[x + y * m_image_size] = color;
+}
+float PPM::getPixel(int x, int y)
+{
+    return float(m_image[x + y * m_image_size]);
 }

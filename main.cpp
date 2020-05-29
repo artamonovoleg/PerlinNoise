@@ -10,8 +10,14 @@ void drawOctave(int size, int ppc, PPM image)
         for (int x = 0; x < size; x++)
         {
             if(x % ppc == 0)
-                color = gen();
-            image.setPixel(x, y, color);
+                    color = gen();
+            if(ppc == 1)
+                image.setPixel(x, y, color);
+            else
+            {
+                color = (image.getPixel(x, y) + color) / 2; 
+                image.setPixel(x, y, color);
+            }
         }
     }
     ppc *= 2;
