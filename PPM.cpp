@@ -14,11 +14,11 @@ void PPM::createImage(const char * name)
     fwrite(m_image, sizeof(unsigned char) * m_image_size * m_image_size, 1, fp);
     fclose(fp);
 }
-void PPM::setPixel(int x, int y, float color)
+void PPM::setPixel(int x, int y, int color)
 {
     m_image[x + y * m_image_size] = color;
 }
 float PPM::getPixel(int x, int y)
 {
-    return float(m_image[x + y * m_image_size]);
+    return int(m_image[x + y * m_image_size]);
 }
