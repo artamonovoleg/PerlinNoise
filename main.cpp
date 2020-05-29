@@ -10,8 +10,12 @@ void drawOctave(int size, int ppc, PPM image)
         for (int x = 0; x < size; x++)
         {
             // if(x % ppc == 0 || y % ppc == 0)
-            if((x + y * size) % ppc == 0)
-                color = gen() % 256;
+            // if(x % ppc == 0 )
+            //     color = gen() % 256;
+            if(x > size / 2 && y < size / 2)
+                color = 255.0f;
+            if(x < size / 2)
+                color = 0.0f;
             image.setPixel(x, y, color);
         }
     }
@@ -19,9 +23,9 @@ void drawOctave(int size, int ppc, PPM image)
 }
 int main()
 {
-    int size = 256;
+    int size = 1024;
     PPM image = PPM(size);
-    int ppc = 1;
+    int ppc = 64;
     // for (int i = size; i != 16; i /=2)
     // {
         drawOctave(size, ppc, image);
