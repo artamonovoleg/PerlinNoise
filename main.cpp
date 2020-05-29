@@ -1,7 +1,7 @@
 #include <iostream>
 #include <PPM.hpp>
 #include <random>
-void drawOctave(int size, int ppc, PPM image)
+void drawOctave(int size, int &ppc, PPM *image)
 {
     std::mt19937 gen;
     float color = gen() % 256;
@@ -11,12 +11,12 @@ void drawOctave(int size, int ppc, PPM image)
         {
             if(x % ppc == 0 || y % ppc == 0)
                     color = gen();
-            if(ppc == 4)
-                image.setPixel(x, y, color);
+            if(ppc == 1)
+                image -> setPixel(x, y, color);
             else
             {
-                color = (image.getPixel(x, y) + color) / 2; 
-                image.setPixel(x, y, color);
+                color = (image -> getPixel(x, y) + color) / 2; 
+                image -> setPixel(x, y, color);
             }
         }
     }
@@ -27,9 +27,9 @@ int main()
     int size = 1024;
     PPM image = PPM(size);
     int ppc = 1;
-    for (int i = size; i != 8; i /=2)
+    for (int i = size; i != 16; i /=2)
     {
-        drawOctave(1024, ppc, image);
+        drawOctave(size, ppc, &image);
     }
     image.createImage();
     return 0;
