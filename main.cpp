@@ -2,35 +2,41 @@
 #include <PPM.hpp>
 #include <random>
 
-void drawOctave (int size, int quad_size, PPM image)
+void drawOctave(int *octave, int octave_size)
 {
     std::mt19937 gen;
-    float color = gen() % 256;
-    for (int y = 0; y < size; y ++)
+    int color;
+    for(int y = 0; y < octave_size; y++)
     {
-        for (int x = 0; x < size; x ++)
+        for(int x = 0; x < octave_size; x++)
         {
-            if(x % quad_size == 0 && y % quad_size == 0)
-                color = gen() % 256;
-            else
-            if(y != 0 && x % quad_size == 0)
-                color = image.getPixel(x, y - 1);
-            else
-            if(x != 0)
-                color = image.getPixel(x - 1, y);
-                image.setPixel(x, y, color);
+            color = gen() % 256;
+            octave [x + y * octave_size] = color;
         }
     }
 }
-
+void addOctave(int *octave, int octave_size, PPM image)
+{
+    for(int y = 0; y < image.getSize(); y++)
+    {
+        for(int x = 0; x < image.getSize(); x++)
+        {
+            int tempX = (x * octave_size) / image.getSize();
+            int tempY = (y * octave_size) / image.getSize();
+            image.setPixel(x, y, (image.getPixel(x, y) + octave[tempX + tempY * octave_size]) / 2);
+        }
+    }
+}
 int main()
 {
-    int size = 1024;
+    int size = 512;
     PPM image = PPM(size);
-    int quad_size = 1;
-    float pc = -1.0f;
-    drawOctave(size, 16, image);
-    
+    for(int i = 1024; i != 8; i /=2)
+    {
+        int octave [i * i];
+        drawOctave(octave, i);
+        addOctave(octave, i, image);
+    }
     
     image.createImage("first.ppm");
     return 0;
