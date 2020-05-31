@@ -23,15 +23,6 @@ int PerlinNoise::dotProduct()
     return 0;
 }
 
-float PerlinNoise::getNoise(unsigned int x)
-{
-}
-
-float PerlinNoise::getPerlinNoise(float x, float y)
-{
-
-}
-
 void PerlinNoise::setSeed(int seed)
 {
     m_seed = seed;
