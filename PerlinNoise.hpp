@@ -24,9 +24,12 @@ class PerlinNoise
         float noise1d(int x);
         double smoothNoise1d(float x);
         double interpolatedNoise1d(float x);
-        double noise2d(double x, double y);
         double perlinNoise1d(float x);
         void print();
+        float noise2d(int x, int y);
+        double smoothNoise2d(float x, float y);
+        double interpolatedNoise2d(float x, float y);
+        double perlinNoise2d(float x, float y);
 };
 
 

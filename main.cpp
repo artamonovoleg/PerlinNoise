@@ -14,27 +14,36 @@ int main()
     PerlinNoise noise;
 
 
+        // for (int x = 0; x < width; x++)
+        // {
+        // //     float c = noise.noise1d(x);
+        // //     // if (c < -1.0f && c > 1.0f)
+        // //         std::cout << c << std::endl;
+        //     float n = noise.perlinNoise1d(x);
+        //     int c =  (fabs(n)) * 255;
+        //     if (c >= 254 && c > 0)
+        //     {
+        //         // std::cout << c << std::endl;
+        //     }
+        //     else
+        //     {
+        //         int rgb [] = {c, c, c};
+        //         image.drawPixel(x, c, rgb);
+        //     }
+            
+            
+        // }
+    
+      for (int y = 0; y < height; y++)
+    {
         for (int x = 0; x < width; x++)
         {
-        //     float c = noise.noise1d(x);
-        //     // if (c < -1.0f && c > 1.0f)
-        //         std::cout << c << std::endl;
-            float n = noise.perlinNoise1d(x);
-            int c =  (fabs(n)) * 255;
-            if (c >= 254 && c > 0)
-            {
-                // std::cout << c << std::endl;
-            }
-            else
-            {
-                int rgb [] = {c, c, c};
-                image.drawPixel(x, c, rgb);
-            }
-            
-            
+            float n = noise.perlinNoise2d(x, y);
+        int c =  fabs(n) * 255;
+        int rgb [] = {c, c, c};
+        image.drawPixel(x, y, rgb);
         }
-    
-    
+    }
     // for (int y = 0; y < height; y++)
     // {
     //     for (int x = 0; x < width; x++)

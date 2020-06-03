@@ -71,3 +71,49 @@ double PerlinNoise::perlinNoise1d(float x)
     }
     return (total);
 }
+
+float PerlinNoise::noise2d(int x, int y)
+{
+    int n = x + y * 57;
+    n = (n << 13) ^ n;
+    return ( 1.0f - ( (n * (n * n * 15731 + 789221)
+     + 1376312589) & 0x7fffffff) / 1073741824.0);  
+}
+
+double PerlinNoise::smoothNoise2d(float x, float y)
+{
+    float corners = ( noise2d(x-1, y-1)+noise2d(x+1, y-1)
+    + noise2d(x-1, y+1) + noise2d(x+1, y+1) ) / 16;
+    float sides =  ( noise2d(x-1, y)  +noise2d(x+1, y)  +noise2d(x, y-1)  +noise2d(x, y+1) ) /  8;
+    float center = noise2d(x, y) / 4;
+    return corners + sides + center;
+}
+
+double PerlinNoise::interpolatedNoise2d(float x, float y)
+{
+    float integer_X    = int(x);
+    float fractional_X = x - integer_X;
+    float integer_Y    = int(y);
+    float fractional_Y = y - integer_Y;
+    float v1 = smoothNoise2d(integer_X,     integer_Y);
+    float v2 = smoothNoise2d(integer_X + 1, integer_Y);
+    float v3 = smoothNoise2d(integer_X,     integer_Y + 1);
+    float v4 = smoothNoise2d(integer_X + 1, integer_Y + 1);
+    float i1 = lerp(v1 , v2 , fractional_X);
+    float i2 = lerp(v3 , v4 , fractional_X);
+    return lerp(i1 , i2 , fractional_Y);
+}
+
+double PerlinNoise::perlinNoise2d(float x, float y)
+{
+    double total = 0;
+    float p = m_persistence;
+    int n = m_octaves - 1;
+    for (int i = 0; i < n; i++)
+    {
+        float frequency = powf(2,i);
+        float amplitude = powf(p, i);
+        total += interpolatedNoise2d(x * frequency, y * frequency) * amplitude;
+    }
+    return total;
+}
