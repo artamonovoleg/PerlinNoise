@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 #include "PerlinNoise.hpp"
-
+#include <math.h>
 
 PerlinNoise::PerlinNoise()
 {
@@ -33,4 +33,16 @@ void PerlinNoise::setSeed(int seed)
 void PerlinNoise::print()
 {
 
+}
+
+double PerlinNoise::noise1d(int x)
+{
+    x = (x<<13) ^ x;
+    return ( 1.0 - ( (x * (x * x * 15731 + 789221) + 1376312589) & 0x7fffffff) / 1073741824.0); 
+}
+
+
+double PerlinNoise::smoothNoise1d(int x)
+{
+     return noise1d(x)/2  +  noise1d(x-1)/4  +  noise1d(x+1)/4;
 }

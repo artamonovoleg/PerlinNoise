@@ -20,7 +20,9 @@ class PerlinNoise
 
         void setOctaves(int amount) { m_octaves = amount; };
         void setSeed(int seed);
-
+        double noise1d(int x);
+        double smoothNoise1d(int x);
+        double noise2d(double x, double y);
         void print();
 };
 
