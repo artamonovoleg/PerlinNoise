@@ -16,10 +16,14 @@ int main()
 
         for (int x = 0; x < width; x++)
         {
-            int c =  (noise.smoothNoise1d(x) + 1) * 255;
-            if (c >= 255)
+        //     float c = noise.noise1d(x);
+        //     // if (c < -1.0f && c > 1.0f)
+        //         std::cout << c << std::endl;
+            float n = noise.perlinNoise1d(x);
+            int c =  (fabs(n)) * 255;
+            if (c >= 254 && c > 0)
             {
-                std::cout << c << std::endl;
+                // std::cout << c << std::endl;
             }
             else
             {

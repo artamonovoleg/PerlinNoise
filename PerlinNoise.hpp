@@ -10,6 +10,7 @@ class PerlinNoise
     private:
         unsigned int m_seed = 133;
         int m_octaves = 8;
+        float m_persistence = .5f;
     public:
         PerlinNoise();
 
@@ -20,9 +21,11 @@ class PerlinNoise
 
         void setOctaves(int amount) { m_octaves = amount; };
         void setSeed(int seed);
-        double noise1d(int x);
-        double smoothNoise1d(int x);
+        float noise1d(int x);
+        double smoothNoise1d(float x);
+        double interpolatedNoise1d(float x);
         double noise2d(double x, double y);
+        double perlinNoise1d(float x);
         void print();
 };
 
