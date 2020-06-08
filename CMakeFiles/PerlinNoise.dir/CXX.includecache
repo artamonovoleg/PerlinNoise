@@ -6,22 +6,12 @@
 
 #IncludeRegexTransform: 
 
-/home/kaygalle/Documents/PerlinNoise/PPM/PPM.cpp
-PPM.hpp
-/home/kaygalle/Documents/PerlinNoise/PPM/PPM.hpp
-fstream
--
-sstream
--
-
-/home/kaygalle/Documents/PerlinNoise/PPM/PPM.hpp
-iostream
--
-
 /home/kaygalle/Documents/PerlinNoise/PerlinNoise.cpp
 iostream
 -
 random
+-
+algorithm
 -
 PerlinNoise.hpp
 /home/kaygalle/Documents/PerlinNoise/PerlinNoise.hpp

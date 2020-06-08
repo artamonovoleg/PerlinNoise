@@ -10,6 +10,7 @@ class PerlinNoise
         unsigned int m_seed = 133;
         int m_octaves = 8;
         float m_persistence = .5f;
+        static std::vector <int> p;
     public:
         PerlinNoise();
 
