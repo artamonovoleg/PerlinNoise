@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kaygalle/Documents/PerlinNoise/PerlinNoise.cpp
+iostream
+-
+random
+-
+PerlinNoise.hpp
+/home/kaygalle/Documents/PerlinNoise/PerlinNoise.hpp
+math.h
+-
+
+/home/kaygalle/Documents/PerlinNoise/PerlinNoise.hpp
+

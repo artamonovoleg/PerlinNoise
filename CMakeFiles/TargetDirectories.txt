@@ -1,0 +1,3 @@
+/home/kaygalle/Documents/PerlinNoise/CMakeFiles/rebuild_cache.dir
+/home/kaygalle/Documents/PerlinNoise/CMakeFiles/edit_cache.dir
+/home/kaygalle/Documents/PerlinNoise/CMakeFiles/PerlinNoise.dir
