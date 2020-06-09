@@ -12,49 +12,21 @@ int main()
     PPM image = PPM(width, height, "out.ppm");
     float heights [width] [height];
     PerlinNoise noise;
-
-
-        // for (int x = 0; x < width; x++)
-        // {
-        // //     float c = noise.noise1d(x);
-        // //     // if (c < -1.0f && c > 1.0f)
-        // //         std::cout << c << std::endl;
-        //     float n = noise.perlinNoise1d(x);
-        //     int c =  (fabs(n)) * 255;
-        //     if (c >= 254 && c > 0)
-        //     {
-        //         // std::cout << c << std::endl;
-        //     }
-        //     else
-        //     {
-        //         int rgb [] = {c, c, c};
-        //         image.drawPixel(x, c, rgb);
-        //     }
-            
-            
-        // }
-    
-      for (int y = 0; y < height; y++)
+      
+    for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
         {
-            float n = noise.perlinNoise2d(x, y);
-        int c =  fabs(n) * 255;
-        int rgb [] = {c, c, c};
-        image.drawPixel(x, y, rgb);
+            double j = (double)y/((double)width);
+			double i = (double)x/((double)height);
+			float n = noise.interpolateNoise3d(10 * i, 10 * j, 0.8);
+			n = 20 * noise.interpolateNoise3d(i, j, 0.8);
+			n = n - floor(n);
+
+            int rgb [] = {n * 255, n * 255, n * 255};
+            image.drawPixel(x, y, rgb);
         }
     }
-    // for (int y = 0; y < height; y++)
-    // {
-    //     for (int x = 0; x < width; x++)
-    //     {
-    //         for (int z = 0; z < width; z++)
-    //         {
-    //             int c =  (noise.noise1d(i) + 1) * 255;
-    //             int rgb [] = {c, c, c};
-    //             image.drawPixel(x, y, rgb);
-    //         }
-    //     }
-    // }
+
     image.writeImage();
 }

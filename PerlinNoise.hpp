@@ -1,7 +1,6 @@
 //
 // Created by kaygalle on 24.05.2020.
 //
-
 #ifndef PERLINNOISE_HPP
 #define PERLINNOISE_HPP
 class PerlinNoise
@@ -13,23 +12,14 @@ class PerlinNoise
         static std::vector <int> p;
     public:
         PerlinNoise();
-
         float getNoise(unsigned int x);
         float lerp(float v0, float v1, float t);
         float getPerlinNoise(float x, float y);
-        int dotProduct();
-
-        void setOctaves(int amount) { m_octaves = amount; };
+        float fade(double t);
+        float grad(int hash, double x, double y, double z);
         void setSeed(int seed);
-        float noise1d(int x);
-        double smoothNoise1d(float x);
-        double interpolatedNoise1d(float x);
-        double perlinNoise1d(float x);
-        void print();
-        float noise2d(int x, int y);
-        double smoothNoise2d(float x, float y);
-        double interpolatedNoise2d(float x, float y);
-        double perlinNoise2d(float x, float y);
+        void setPerm();
+        double interpolateNoise3d(double x, double y, double z);
 };
 
 
