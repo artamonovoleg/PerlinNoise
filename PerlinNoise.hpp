@@ -12,14 +12,15 @@ class PerlinNoise
         static std::vector <int> p;
     public:
         PerlinNoise();
+        PerlinNoise(int seed);
         float getNoise(unsigned int x);
         float lerp(float v0, float v1, float t);
         float getPerlinNoise(float x, float y);
-        float fade(double t);
-        float grad(int hash, double x, double y, double z);
+        float fade(float t);
+        float grad(int hash, float x, float y, float z);
         void setSeed(int seed);
         void setPerm();
-        double interpolateNoise3d(double x, double y, double z);
+        float interpolateNoise3d(float x, float y, float z);
 };
 
 

@@ -11,7 +11,7 @@ int main()
     int height = 256;
     PPM image = PPM(width, height, "out.ppm");
     float heights [width] [height];
-    PerlinNoise noise;
+    PerlinNoise noise = PerlinNoise(11);
       
     for (int y = 0; y < height; y++)
     {
