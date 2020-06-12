@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/PerlinNoise.dir/main.cpp.o CMakeFiles/PerlinNoise.dir/PerlinNoise.cpp.o CMakeFiles/PerlinNoise.dir/PPM/PPM.cpp.o  -o PerlinNoise 

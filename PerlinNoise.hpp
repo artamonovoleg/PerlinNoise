@@ -3,24 +3,30 @@
 //
 #ifndef PERLINNOISE_HPP
 #define PERLINNOISE_HPP
+
+#include <vector>
+#include <algorithm>
+#include <random>
+
+struct vec3
+{
+    int x;
+    int y;
+    int z;
+};
 class PerlinNoise
 {
     private:
-        unsigned int m_seed = 133;
-        int m_octaves = 8;
-        float m_persistence = .5f;
+        static vec3 grad3 [12];
         static std::vector <int> p;
+        static int fastfloor(double x);
+        static double dot_product(vec3 g, double x, double y, double z);
+        static double lerp (double a, double b, double t);
+        static double fade(double t);
     public:
         PerlinNoise();
-        PerlinNoise(int seed);
-        float getNoise(unsigned int x);
-        float lerp(float v0, float v1, float t);
-        float getPerlinNoise(float x, float y);
-        float fade(float t);
-        float grad(int hash, float x, float y, float z);
-        void setSeed(int seed);
-        void setPerm();
-        float interpolateNoise3d(float x, float y, float z);
+        static void setSeed(int seed);
+        static double PerlinNoise_3D(double x, double y, double z);
 };
 
 

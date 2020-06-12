@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/Graphics.dir/main.cpp.o CMakeFiles/Graphics.dir/PerlinNoise.cpp.o CMakeFiles/Graphics.dir/PPM/PPM.cpp.o  -o Graphics 

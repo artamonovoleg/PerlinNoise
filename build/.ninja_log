@@ -1,5 +1,0 @@
-# ninja log v5
-0	451	1591656850949857903	CMakeFiles/PerlinNoise.dir/PPM/PPM.cpp.o	c2d2b3b316b9bdb1
-0	612	1591656851109857908	CMakeFiles/PerlinNoise.dir/PerlinNoise.cpp.o	b8d9db7b80413298
-0	622	1591656851119857908	CMakeFiles/PerlinNoise.dir/main.cpp.o	4b69d36f4c8b0e3d
-622	693	1591656851189857910	PerlinNoise	a8fe66791ea74c92

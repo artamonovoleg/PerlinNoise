@@ -1,87 +1,101 @@
-//
-// Created by kaygalle on 24.05.2020.
-//
-
-#include <iostream>
-#include <random>
-#include <algorithm>
 #include "PerlinNoise.hpp"
-#include <math.h>
+
+vec3 PerlinNoise::grad3 [] = {{1,1,0},{-1,1,0},{1,-1,0},{-1,-1,0},
+                              {1,0,1},{-1,0,1},{1,0,-1},{-1,0,-1},
+                              {0,1,1},{0,-1,1},{0,1,-1},{0,-1,-1}};
+
+std::vector <int> PerlinNoise::p = {
+    151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,
+    8,99,37,240,21,10,23,190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,
+    35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,
+    134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,
+    55,46,245,40,244,102,143,54, 65,25,63,161,1,216,80,73,209,76,132,187,208, 89,
+    18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,
+    250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,
+    189,28,42,223,183,170,213,119,248,152, 2,44,154,163, 70,221,153,101,155,167,
+    43,172,9,129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,
+    97,228,251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,
+    107,49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
+    138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180 };
 
 PerlinNoise::PerlinNoise()
 {
-    setPerm();
-}
-
-PerlinNoise::PerlinNoise(int seed)
-{
-    setSeed(seed);
-    setPerm();
-}
-std::vector <int> PerlinNoise::p = { 151,160,137,91,90,15,                 // Hash lookup table as defined by Ken Perlin.  This is a randomly
-    131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,    // arranged array of all numbers from 0-255 inclusive.
-    190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
-    88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
-    77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
-    102,143,54, 65,25,63,161, 1,216,80,73,209,76,132,187,208, 89,18,169,200,196,
-    135,130,116,188,159,86,164,100,109,198,173,186, 3,64,52,217,226,250,124,123,
-    5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,189,28,42,
-    223,183,170,213,119,248,152, 2, 44,154,163,70,221,153,101,155,167, 43,172,9,
-    129,22,39,253, 19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,228,
-    251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,107,
-    49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
-    138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
-};
-
-float PerlinNoise::lerp(float v0, float v1, float t)
-{
-    return v1 + v0 * (t - v1);
-}
-
-float PerlinNoise::fade(float t)
-{
-    return (t * t * t * (t * (t * 6 - 15) + 10));
-}
-
-float PerlinNoise::grad(int hash, float x, float y, float z) 
-{
-	int h = hash & 15;
-	float u = h < 8 ? x : y,
-		   v = h < 4 ? y : h == 12 || h == 14 ? x : z;
-	return ((h & 1) == 0 ? u : -u) + ((h & 2) == 0 ? v : -v);
-}
-
-void PerlinNoise::setPerm()
-{
-    p.resize(256);
-    std::iota(p.begin(), p.end(), 0);
-    std::default_random_engine engine(m_seed);
-    std::shuffle(p.begin(), p.end(), engine);
-    p.insert(p.end(), p.begin(), p.end());   
+    p.insert(p.end(), p.begin(), p.end());
 }
 
 void PerlinNoise::setSeed(int seed)
 {
-    m_seed = seed;
+    p.resize(256);
+    std::iota(p.begin(), p.end(), 0);
+    std::default_random_engine engine(seed);
+    std::shuffle(p.begin(), p.end(), engine);
+    p.insert(p.end(), p.begin(), p.end());
 }
 
-float PerlinNoise::interpolateNoise3d(float x, float y, float z) 
+int PerlinNoise::fastfloor(double x)
 {
-    int X = (int)floor(x) & 255;               
-    int Y = (int)floor(y) & 255;      
-    int Z = (int)floor(z) & 255;
-    x -= floor(x);                      
-    y -= floor(y);                               
-    z -= floor(z);
-    float u = fade(x);                              
-    float v = fade(y);                               
-    float w = fade(z);
-    int A = p[X] + Y;
-	int AA = p[A] + Z;
-	int AB = p[A + 1] + Z;
-	int B = p[X + 1] + Y;
-	int BA = p[B] + Z;
-	int BB = p[B + 1] + Z;
-    float res = lerp(w, lerp(v, lerp(u, grad(p[AA], x, y, z), grad(p[BA], x-1, y, z)), lerp(u, grad(p[AB], x, y-1, z), grad(p[BB], x-1, y-1, z))),	lerp(v, lerp(u, grad(p[AA+1], x, y, z-1), grad(p[BA+1], x-1, y, z-1)), lerp(u, grad(p[AB+1], x, y-1, z-1),	grad(p[BB+1], x-1, y-1, z-1))));
-	return (res + 1.0) / 2.0;
+    return x > 0 ? (int)x : (int) x - 1;
+}
+
+double PerlinNoise::dot_product(vec3 g, double x, double y, double z)
+{
+    return g.x * x + g.y * y + g.z * z;
+}
+
+double PerlinNoise::lerp(double a, double b, double t)
+{
+    return (1 - t) * a + t * b;
+}
+
+double PerlinNoise::fade(double t)
+{
+    return t*t*t*(t*(t*6-15)+10);
+}
+
+double PerlinNoise::PerlinNoise_3D(double x, double y, double z)
+{
+    int X = fastfloor(x);
+    int Y = fastfloor(y);
+    int Z = fastfloor(z);
+    // Get relative xyz coordinates of point within that cell
+    x = x - X;
+    y = y - Y;
+    z = z - Z;
+    // Wrap the integer cells at 255 (smaller integer period can be introduced here)
+    X = X & 255;
+    Y = Y & 255;
+    Z = Z & 255;
+    // Calculate a set of eight hashed gradient indices
+    int gi000 = p[X+p[Y+p[Z]]] % 12;
+    int gi001 = p[X+p[Y+p[Z+1]]] % 12;
+    int gi010 = p[X+p[Y+1+p[Z]]] % 12;
+    int gi011 = p[X+p[Y+1+p[Z+1]]] % 12;
+    int gi100 = p[X+1+p[Y+p[Z]]] % 12;
+    int gi101 = p[X+1+p[Y+p[Z+1]]] % 12;
+    int gi110 = p[X+1+p[Y+1+p[Z]]] % 12;
+    int gi111 = p[X+1+p[Y+1+p[Z+1]]] % 12;
+    // Calculate noise contributions from each of the eight corners
+    double n000= dot_product(grad3[gi000], x, y, z);
+    double n100= dot_product(grad3[gi100], x-1, y, z);
+    double n010= dot_product(grad3[gi010], x, y-1, z);
+    double n110= dot_product(grad3[gi110], x-1, y-1, z);
+    double n001= dot_product(grad3[gi001], x, y, z-1);
+    double n101= dot_product(grad3[gi101], x-1, y, z-1);
+    double n011= dot_product(grad3[gi011], x, y-1, z-1);
+    double n111= dot_product(grad3[gi111], x-1, y-1, z-1);
+    // Compute the fade curve value for each of x, y, z
+    double u = fade(x);
+    double v = fade(y);
+    double w = fade(z);
+    // Interpolate along x the contributions from each of the corners
+    double nx00 = lerp(n000, n100, u);
+    double nx01 = lerp(n001, n101, u);
+    double nx10 = lerp(n010, n110, u);
+    double nx11 = lerp(n011, n111, u);
+    // Interpolate the four results along y
+    double nxy0 = lerp(nx00, nx10, v);
+    double nxy1 = lerp(nx01, nx11, v);
+    // Interpolate the two last results along z
+    double nxyz = lerp(nxy0, nxy1, w);
+    return nxyz;
 }
