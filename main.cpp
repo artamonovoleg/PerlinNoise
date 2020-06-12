@@ -16,8 +16,8 @@ int main()
     {
         for (int x = 0; x < width; x++)
         {
-            double x_p = (double)y/((double)width) * 1.5;
-            double y_p = (double)x/((double)height) * 1.5;
+            double x_p = (double)y / ((double)width) * 1.5;
+            double y_p = (double)x / ((double)height) * 1.5;
             int rgb[3];
             double n = PerlinNoise::PerlinNoise_3D(x_p * 10, y_p * 10, 0.8);
             if (n * 255 < 10)
