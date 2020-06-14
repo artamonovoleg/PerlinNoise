@@ -197,32 +197,32 @@ PerlinNoise.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerlinNoise.dir/build.make CMakeFiles/PerlinNoise.dir/PerlinNoise.cpp.s
 .PHONY : PerlinNoise.cpp.s
 
-main.o: main.cpp.o
+example.o: example.cpp.o
 
-.PHONY : main.o
+.PHONY : example.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerlinNoise.dir/build.make CMakeFiles/PerlinNoise.dir/main.cpp.o
-.PHONY : main.cpp.o
+example.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerlinNoise.dir/build.make CMakeFiles/PerlinNoise.dir/example.cpp.o
+.PHONY : example.cpp.o
 
-main.i: main.cpp.i
+example.i: example.cpp.i
 
-.PHONY : main.i
+.PHONY : example.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerlinNoise.dir/build.make CMakeFiles/PerlinNoise.dir/main.cpp.i
-.PHONY : main.cpp.i
+example.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerlinNoise.dir/build.make CMakeFiles/PerlinNoise.dir/example.cpp.i
+.PHONY : example.cpp.i
 
-main.s: main.cpp.s
+example.s: example.cpp.s
 
-.PHONY : main.s
+.PHONY : example.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerlinNoise.dir/build.make CMakeFiles/PerlinNoise.dir/main.cpp.s
-.PHONY : main.cpp.s
+example.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/PerlinNoise.dir/build.make CMakeFiles/PerlinNoise.dir/example.cpp.s
+.PHONY : example.cpp.s
 
 # Help Target
 help:
@@ -239,9 +239,9 @@ help:
 	@echo "... PerlinNoise.o"
 	@echo "... PerlinNoise.i"
 	@echo "... PerlinNoise.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... example.o"
+	@echo "... example.i"
+	@echo "... example.s"
 .PHONY : help
 
 

@@ -9,7 +9,7 @@ set(MY_DIRECTORIES
     )
 include_directories(${MY_DIRECTORIES})
 set(SOURCE_FILES
-        main.cpp
+        example.cpp
         PerlinNoise.cpp
         PPM/PPM.cpp
       )
