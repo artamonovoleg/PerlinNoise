@@ -14,9 +14,11 @@ struct vec3
     int y;
     int z;
 };
+
 class PerlinNoise
 {
     private:
+        double m_scale;
         static vec3 grad3 [12];
         static std::vector <int> p;
         static int fastfloor(double x);
@@ -25,8 +27,10 @@ class PerlinNoise
         static double fade(double t);
     public:
         PerlinNoise();
-        static void setSeed(int seed);
-        static double PerlinNoise_3D(double x, double y, double z);
+        double PerlinNoise3D(double x, double y, double z);
+        double fracNoise3D(double x, double y, double z);
+        void setSeed(int seed);
+        void setScale(double scale);
 };
 
 

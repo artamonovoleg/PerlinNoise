@@ -32,6 +32,11 @@ void PerlinNoise::setSeed(int seed)
     p.insert(p.end(), p.begin(), p.end());
 }
 
+void PerlinNoise::setScale(double scale)
+{
+    m_scale = scale;
+}
+
 int PerlinNoise::fastfloor(double x)
 {
     return x > 0 ? (int)x : (int) x - 1;
@@ -52,20 +57,24 @@ double PerlinNoise::fade(double t)
     return t*t*t*(t*(t*6-15)+10);
 }
 
-double PerlinNoise::PerlinNoise_3D(double x, double y, double z)
+double PerlinNoise::PerlinNoise3D(double x, double y, double z)
 {
+    x /= m_scale;
+    y /= m_scale;
+    z /= m_scale;
+
     int X = fastfloor(x);
     int Y = fastfloor(y);
     int Z = fastfloor(z);
-    // Get relative xyz coordinates of point within that cell
+
     x = x - X;
     y = y - Y;
     z = z - Z;
-    // Wrap the integer cells at 255 (smaller integer period can be introduced here)
+
     X = X & 255;
     Y = Y & 255;
     Z = Z & 255;
-    // Calculate a set of eight hashed gradient indices
+
     int gi000 = p[X+p[Y+p[Z]]] % 12;
     int gi001 = p[X+p[Y+p[Z+1]]] % 12;
     int gi010 = p[X+p[Y+1+p[Z]]] % 12;
@@ -74,7 +83,7 @@ double PerlinNoise::PerlinNoise_3D(double x, double y, double z)
     int gi101 = p[X+1+p[Y+p[Z+1]]] % 12;
     int gi110 = p[X+1+p[Y+1+p[Z]]] % 12;
     int gi111 = p[X+1+p[Y+1+p[Z+1]]] % 12;
-    // Calculate noise contributions from each of the eight corners
+
     double n000= dot_product(grad3[gi000], x, y, z);
     double n100= dot_product(grad3[gi100], x-1, y, z);
     double n010= dot_product(grad3[gi010], x, y-1, z);
@@ -83,19 +92,33 @@ double PerlinNoise::PerlinNoise_3D(double x, double y, double z)
     double n101= dot_product(grad3[gi101], x-1, y, z-1);
     double n011= dot_product(grad3[gi011], x, y-1, z-1);
     double n111= dot_product(grad3[gi111], x-1, y-1, z-1);
-    // Compute the fade curve value for each of x, y, z
+
     double u = fade(x);
     double v = fade(y);
     double w = fade(z);
-    // Interpolate along x the contributions from each of the corners
+
     double nx00 = lerp(n000, n100, u);
     double nx01 = lerp(n001, n101, u);
     double nx10 = lerp(n010, n110, u);
     double nx11 = lerp(n011, n111, u);
-    // Interpolate the four results along y
+
     double nxy0 = lerp(nx00, nx10, v);
     double nxy1 = lerp(nx01, nx11, v);
-    // Interpolate the two last results along z
+
     double nxyz = lerp(nxy0, nxy1, w);
     return nxyz;
 }
+
+double PerlinNoise::fracNoise3D(double x, double y, double z)
+{
+    double value = 0.0;
+    double factor = 1.0;
+    for (int i = 0; i < 8; i++)
+    {
+        value += PerlinNoise3D(x / factor, y / factor, z /factor);
+        factor *= 2.0;
+    }
+    return value;
+}
+
+
